@@ -39,6 +39,7 @@ import frc.robot.commands.IntakeAlgae;
 import frc.robot.commands.OutakeAlgae;
 import frc.robot.commands.PIDElevator;
 import frc.robot.commands.PIDWrist;
+import frc.robot.commands.SetLeds;
 import frc.robot.subsystems.ElevatorSubsystem.ElevatorPosition;
 import frc.robot.subsystems.PhotonCam;
 //import frc.robot.commands.LiftElevToHallEffect;
@@ -50,6 +51,7 @@ import frc.robot.commands.StartShooterWheel;
 import frc.robot.commands.StopRampWheel;
 import frc.robot.commands.StopShooterWheel;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.CANdleSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.RampSubSystem;
@@ -87,7 +89,8 @@ public class RobotContainer {
         private final WristSubSystem wristSubsystem = new WristSubSystem();
         private final RampSubSystem rampSubsystem = new RampSubSystem();
         private final Shooter shooter = new Shooter();
-        public final PhotonCam cam = new PhotonCam();
+        public  PhotonCam cam = new PhotonCam();
+        private final CANdleSubsystem m_candle = new CANdleSubsystem();
 
         private final SendableChooser<Command> autoChooser;
 
@@ -172,6 +175,8 @@ public class RobotContainer {
                                                                                                   // X
                                                                                                   // (left)
                                                 ));
+
+                m_candle.setDefaultCommand(new SetLeds(cam, m_candle));
 
                 /*
                  * DRIVER CONTROLLER BINDINGS

@@ -1,17 +1,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Candle;
+import frc.robot.subsystems.CANdleSubsystem;
+import frc.robot.subsystems.PhotonCam;
 
 public class SetLeds extends Command {
-    private Candle m_candle;
-    private Candle.LEDState m_ledState;
-    private boolean isFinished = false;
-
-    public SetLeds(Candle candle, Candle.LEDState ledState) {
+    PhotonCam m_cam;
+    CANdleSubsystem m_candle;
+    double yaw_target = 30;//TODO: measure in degrees
+    double yaw_tolerance = 1;//TODO: tune the tolerance
+    public SetLeds(PhotonCam cam, CANdleSubsystem candle) {
+        m_cam = cam;
         m_candle = candle;
-        m_ledState = ledState;
-        addRequirements(m_candle);
+        addRequirements(m_cam, m_candle);
     }
 
     @Override
@@ -21,14 +22,17 @@ public class SetLeds extends Command {
 
     @Override
     public void execute() {
-        m_candle.setLEDSTate(m_ledState);
-        isFinished = true;
+        var yaw = m_cam.getCameraYaw();
+        if(Math.abs(yaw - yaw_target) < yaw_tolerance){
+            m_candle.setLEDSTate(CANdleSubsystem.LEDState.GREEN);
+        } else {
+            m_candle.setLEDSTate(CANdleSubsystem.LEDState.BLACK);
+        }
     }
 
     @Override
     public boolean isFinished() {
-
-        return isFinished;
+        return false;
     }
 
     @Override
