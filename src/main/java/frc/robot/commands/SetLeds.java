@@ -22,7 +22,7 @@ public class SetLeds extends Command {
 
     @Override
     public void execute() {
-        var yaw = m_cam.getCameraYaw();
+        var yaw = m_cam.getCamera1Yaw();
         if(Math.abs(yaw - yaw_target) < yaw_tolerance){
             m_candle.setLEDSTate(CANdleSubsystem.LEDState.GREEN);
         } else {
