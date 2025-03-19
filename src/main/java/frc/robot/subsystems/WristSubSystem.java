@@ -57,17 +57,17 @@ public class WristSubSystem extends SubsystemBase {
 
   public double TranslateEnum(WristPosition wristPosition) {
     if (wristPosition == WristPosition.CORALL4) {
-      return .335;
+      return -0.146 - 0.018;
     } else if (wristPosition == WristPosition.ALGAEPICKUP) {
-      return .436; // TODO: change to correct
+      return -0.146 + 0.1; // TODO: change to correct
     } else if (wristPosition == WristPosition.ALGAESHOOT) {
-      return .2; // TODO: change to correct
+      return -0.146 - 0.153; // TODO: change to correct
     } else if (wristPosition == WristPosition.PROCESSOR) {
-      return .38;
+      return -0.146 + 0.027;
     }
 
     else {
-      return 0.353; // home
+      return -0.146; // home
     }
   }
 

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CANdleSubsystem extends SubsystemBase {
-    CANdle m_candle = new CANdle(0);
+    CANdle m_candle = new CANdle(20);
     public LEDState ledstate;
 
     public void Candle() {

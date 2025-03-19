@@ -31,14 +31,14 @@ public class PhotonCam extends SubsystemBase {
     PhotonCamera aprilTag3 = new PhotonCamera("Apriltag_3");
 
     // location of camera on the robot
-    public final Transform3d aprilTag1Pos = new Transform3d(0.3302, 0, 0.209, new Rotation3d());
-    public final Transform3d aprilTag3Pos = new Transform3d(0.3302, 0, 0.209, new Rotation3d());
+    public final Transform3d aprilTag1Pos = new Transform3d(0.254, 0.2921, 0.2032, new Rotation3d(0,0,45));
+    public final Transform3d aprilTag3Pos = new Transform3d(0.254, -0.2921, 0.2032, new Rotation3d(0,0,-45));
     public final AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
     // Constants such as camera and target height stored. Change per robot and goal!
-    final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);//TODO: measure
+    /*final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);//TODO: measure
     final double TARGET_HEIGHT_METERS = 0.3;//TODO: verify
     // Angle between horizontal and the camera.
-    final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0); // TODO: verify
+    final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0); // TODO: verify*/
 
     PhotonPoseEstimator poseEstimator = new PhotonPoseEstimator(fieldLayout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
             aprilTag1Pos);
@@ -58,7 +58,7 @@ public class PhotonCam extends SubsystemBase {
         return robotPose;
     }
 
-    public double getY1TranslationFromTarget(){
+    /*public double getY1TranslationFromTarget(){
         double yTranslation = Double.MAX_VALUE;
         var results = aprilTag1.getAllUnreadResults();
         if (!results.isEmpty()) {
@@ -77,22 +77,20 @@ public class PhotonCam extends SubsystemBase {
             }
         }
         return yTranslation;
-    }
+    }*/
 
     public double getCamera1Yaw(){
         double yaw = Double.MAX_VALUE;
-        var results = aprilTag1.getAllUnreadResults();
-        if (!results.isEmpty()) {
-            // Camera processed a new frame since last
-            // Get the last one in the list.
-            var result = results.get(results.size() - 1);
-            if (result.hasTargets()) {
-                var target = result.getBestTarget();
-                yaw =  target.getYaw();
-            }
+        // Camera processed a new frame since last
+        // Get the last one in the list.
+        var result = aprilTag1.getLatestResult();
+        if (result.hasTargets()) {
+            var target = result.getBestTarget();
+            yaw =  target.getYaw();
         }
         return yaw;
     }
+    /*
     public double getY2TranslationFromTarget(){
         double yTranslation = Double.MAX_VALUE;
         var results = aprilTag3.getAllUnreadResults();
@@ -112,18 +110,13 @@ public class PhotonCam extends SubsystemBase {
             }
         }
         return yTranslation;
-    }
+    }*/
     public double getCamera3Yaw(){
         double yaw = Double.MAX_VALUE;
-        var results = aprilTag1.getAllUnreadResults();
-        if (!results.isEmpty()) {
-            // Camera processed a new frame since last
-            // Get the last one in the list.
-            var result = results.get(results.size() - 1);
-            if (result.hasTargets()) {
-                var target = result.getBestTarget();
-                yaw =  target.getYaw();
-            }
+        var result = aprilTag3.getLatestResult();
+        if (result.hasTargets()) {
+            var target = result.getBestTarget();
+            yaw =  target.getYaw();
         }
         return yaw;
     }
@@ -131,7 +124,8 @@ public class PhotonCam extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("AprilTag_1 yaw ", getCamera1Yaw());
-        SmartDashboard.putNumber("AprilTag y translation (TODO: measure/verify) ", getY1TranslationFromTarget());
+        SmartDashboard.putNumber("AprilTag_3 yaw ", getCamera3Yaw());
+        //SmartDashboard.putNumber("AprilTag y translation (TODO: measure/verify) ", getY1TranslationFromTarget());
     }
 
 }
