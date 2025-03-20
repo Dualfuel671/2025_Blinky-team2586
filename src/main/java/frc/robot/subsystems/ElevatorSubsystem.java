@@ -72,7 +72,8 @@ public class ElevatorSubsystem extends SubsystemBase {
         encoder2 = motor2.getEncoder();
 
         PIDConstraints = new Constraints(300, 400);
-        PIDie = new ProfiledPIDController(.040, 0.03, 0, PIDConstraints);
+        //PIDie = new ProfiledPIDController(.040, 0.03, 0, PIDConstraints);
+        PIDie = new ProfiledPIDController(.035, 0.03, 0, PIDConstraints);
 
         upperLimitSwitch = new DigitalInput(5);
         lowerLimitSwitch = new DigitalInput(3);

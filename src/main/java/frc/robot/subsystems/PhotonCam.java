@@ -31,8 +31,11 @@ public class PhotonCam extends SubsystemBase {
     PhotonCamera aprilTag3 = new PhotonCamera("Apriltag_3");
 
     // location of camera on the robot
-    public final Transform3d aprilTag1Pos = new Transform3d(0.254, 0.2921, 0.2032, new Rotation3d(0,0,45));
-    public final Transform3d aprilTag3Pos = new Transform3d(0.254, -0.2921, 0.2032, new Rotation3d(0,0,-45));
+    //public final Transform3d aprilTag1Pos = new Transform3d(0.254, 0.2921, 0.2032, new Rotation3d(0,0,Math.toRadians(45)));
+    public final Transform3d aprilTag1Pos = new Transform3d(0.2667, -0.29845, 0.2794, new Rotation3d(0,0,Math.toRadians(45)));
+    //public final Transform3d aprilTag3Pos = new Transform3d(0.254, -0.2921, 0.2032, new Rotation3d(0,0,Math.toRadians(-45)));
+    public final Transform3d aprilTag3Pos = new Transform3d(0.2667, 0.29845, 0.2794, new Rotation3d(0,0,Math.toRadians(-45)));
+    
     public final AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
     // Constants such as camera and target height stored. Change per robot and goal!
     /*final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);//TODO: measure
@@ -125,6 +128,7 @@ public class PhotonCam extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("AprilTag_1 yaw ", getCamera1Yaw());
         SmartDashboard.putNumber("AprilTag_3 yaw ", getCamera3Yaw());
+        //getRobotPose().get().estimatedPose
         //SmartDashboard.putNumber("AprilTag y translation (TODO: measure/verify) ", getY1TranslationFromTarget());
     }
 
