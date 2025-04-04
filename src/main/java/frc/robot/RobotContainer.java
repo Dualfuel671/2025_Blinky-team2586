@@ -89,7 +89,7 @@ public class RobotContainer {
         private final WristSubSystem wristSubsystem = new WristSubSystem();
         private final RampSubSystem rampSubsystem = new RampSubSystem();
         private final Shooter shooter = new Shooter();
-        public  PhotonCam cam = new PhotonCam();
+        public PhotonCam cam = new PhotonCam();
         private final CANdleSubsystem m_candle = new CANdleSubsystem();
 
         private final SendableChooser<Command> autoChooser;
@@ -144,6 +144,43 @@ public class RobotContainer {
                                                 new StartShooterWheel(shooter)),
                                 new WaitCommand(.1),
                                 new StopShooterWheel(shooter)));
+
+                NamedCommands.registerCommand("Low Algie Pickup", new SequentialCommandGroup(
+                                new PIDElevator(ElevatorPosition.A1, elevatorSubsystem),
+                                new RunCommand(() -> wristSubsystem
+                                                .setCurrentPosition(WristPosition.ALGAEPICKUP),
+                                                wristSubsystem).withTimeout(0.1),
+                                new IntakeAlgae(shooter).withTimeout(1),
+                                new RunCommand(() -> shooter.setShooterSpeed(.2), shooter)
+                                                .withTimeout(.3),
+                                new RunCommand(() -> wristSubsystem
+                                                .setCurrentPosition(WristPosition.HOME),
+                                                wristSubsystem).withTimeout(0.1)));
+
+                NamedCommands.registerCommand("High Algie Pickup", new SequentialCommandGroup(
+                                new PIDElevator(ElevatorPosition.A2, elevatorSubsystem),
+                                new RunCommand(() -> wristSubsystem
+                                                .setCurrentPosition(WristPosition.ALGAEPICKUP),
+                                                wristSubsystem).withTimeout(0.1),
+                                new IntakeAlgae(shooter).withTimeout(1),
+                                new RunCommand(() -> shooter.setShooterSpeed(.2), shooter)
+                                                .withTimeout(.3),
+                                new RunCommand(() -> wristSubsystem
+                                                .setCurrentPosition(WristPosition.HOME),
+                                                wristSubsystem).withTimeout(0.1)));
+
+                NamedCommands.registerCommand("Barge", new SequentialCommandGroup(
+                                new PIDElevator(ElevatorPosition.L4, elevatorSubsystem),
+                                new RunCommand(() -> wristSubsystem
+                                                .setCurrentPosition(WristPosition.ALGAESHOOT),
+                                                wristSubsystem).withTimeout(0.3),
+                                new OutakeAlgae(shooter).withTimeout(.3),
+                                new RunCommand(() -> wristSubsystem
+                                                .setCurrentPosition(WristPosition.HOME),
+                                                wristSubsystem).withTimeout(0.1),
+                                new PIDElevator(ElevatorPosition.Home, elevatorSubsystem),
+                                new RunCommand(() -> elevatorSubsystem.setMotorSpeed(0),
+                                                elevatorSubsystem).withTimeout(0.1)));
 
         }
 
@@ -232,7 +269,7 @@ public class RobotContainer {
                 // Driver right Trigger bind to strafe forward
                 new JoystickButton(driverJoystick, 8).whileTrue(
                                 drivetrain
-                                                .applyRequest(() -> rcDrive.withVelocityX(.2 * MaxSpeed) // Drive
+                                                .applyRequest(() -> rcDrive.withVelocityX(.1 * MaxSpeed) // Drive
                                                                 // forward
                                                                 // with
                                                                 // negative
@@ -251,7 +288,7 @@ public class RobotContainer {
                 // Driver left Trigger bind to strafe backward
                 new JoystickButton(driverJoystick, 7).whileTrue(
                                 drivetrain
-                                                .applyRequest(() -> rcDrive.withVelocityX(-.2 * MaxSpeed) // Drive
+                                                .applyRequest(() -> rcDrive.withVelocityX(-.1 * MaxSpeed) // Drive
                                                                 // forward
                                                                 // with
                                                                 // negative
@@ -324,6 +361,7 @@ public class RobotContainer {
                                                                 .setCurrentPosition(WristPosition.HOME),
                                                                 wristSubsystem).withTimeout(0.3),
                                                 new PIDElevator(ElevatorPosition.L1, elevatorSubsystem)));
+                // setLEDSTate(LEDState.YELLOW);
 
                 // Bind Operator cross button to shoot L2
                 new JoystickButton(operatorJoystick, 2).onTrue(

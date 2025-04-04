@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Path 1"
+            "pathName": "Middle Path 1"
           }
         },
         {
@@ -25,25 +25,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Path 2"
+            "pathName": "Middle Path 2"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Intake"
+            "name": "Low Algie Pickup"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": " Left Path 3"
+            "pathName": "Middle Path 3"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "l4"
+            "name": "Barge"
           }
         },
         {
@@ -55,37 +55,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left Path 4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Intake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left Path 5"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "l4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Home"
+            "pathName": "Middle path 4 Right"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Left Autos",
+  "folder": "Middle Autos",
   "choreoAuto": false
 }

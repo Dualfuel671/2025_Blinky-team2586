@@ -27,6 +27,30 @@
           "data": {
             "pathName": "Left Path 2"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": " Left Path 3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "l4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Home"
+          }
         }
       ]
     }

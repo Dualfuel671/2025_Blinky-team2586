@@ -59,7 +59,7 @@ public class WristSubSystem extends SubsystemBase {
     if (wristPosition == WristPosition.CORALL4) {
       return -0.146 - 0.018;
     } else if (wristPosition == WristPosition.ALGAEPICKUP) {
-      return -0.146 + 0.1; // TODO: change to correct
+      return -0.146 + 0.11; // TODO: change to correct
     } else if (wristPosition == WristPosition.ALGAESHOOT) {
       return -0.146 - 0.153; // TODO: change to correct
     } else if (wristPosition == WristPosition.PROCESSOR) {

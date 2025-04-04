@@ -72,7 +72,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         encoder2 = motor2.getEncoder();
 
         PIDConstraints = new Constraints(300, 400);
-        //PIDie = new ProfiledPIDController(.040, 0.03, 0, PIDConstraints);
+        // PIDie = new ProfiledPIDController(.040, 0.03, 0, PIDConstraints);
         PIDie = new ProfiledPIDController(.035, 0.03, 0, PIDConstraints);
 
         upperLimitSwitch = new DigitalInput(5);
@@ -159,9 +159,9 @@ public class ElevatorSubsystem extends SubsystemBase {
         if (elevatorPosition == ElevatorPosition.L1) {
             return -6;
         } else if (elevatorPosition == ElevatorPosition.L2) {
-            return -11.417;
+            return -10.8;
         } else if (elevatorPosition == ElevatorPosition.L3) {
-            return -22;
+            return -21;
         } else if (elevatorPosition == ElevatorPosition.L4) {
             return -38;
         } else if (elevatorPosition == ElevatorPosition.A1) {
