@@ -19,7 +19,11 @@ public class AdvToShooter extends Command {
 
     @Override
     public void execute() {
-        m_shooter.setShooterSpeed(.2);
+        if (m_shooter.isCoralPresent()) {
+            m_shooter.setShooterSpeed(0);
+        } else {
+            m_shooter.setShooterSpeed(0.2);
+        }
     }
 
     @Override
@@ -31,6 +35,5 @@ public class AdvToShooter extends Command {
     public void end(boolean interrupted) {
         m_shooter.stopShooter();
     }
-
 
 }

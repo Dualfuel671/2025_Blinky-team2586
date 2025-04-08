@@ -27,7 +27,8 @@ public class WristSubSystem extends SubsystemBase {
     CORALL4(2),
     ALGAEPICKUP(3),
     ALGAESHOOT(4),
-    PROCESSOR(5);
+    PROCESSOR(5),
+    FLOORPICKUP(6);
 
     private double value;
 
@@ -64,6 +65,8 @@ public class WristSubSystem extends SubsystemBase {
       return -0.146 - 0.153; // TODO: change to correct
     } else if (wristPosition == WristPosition.PROCESSOR) {
       return -0.146 + 0.027;
+    } else if (wristPosition == WristPosition.FLOORPICKUP) {
+      return -0.146 + 0.156;
     }
 
     else {

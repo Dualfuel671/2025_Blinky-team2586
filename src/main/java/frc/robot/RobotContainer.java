@@ -334,7 +334,8 @@ public class RobotContainer {
                                                 new RunCommand(() -> wristSubsystem
                                                                 .setCurrentPosition(WristPosition.HOME),
                                                                 wristSubsystem).withTimeout(0.3),
-                                                new PIDElevator(ElevatorPosition.Home, elevatorSubsystem),
+                                                new PIDElevator(ElevatorPosition.Home, elevatorSubsystem)
+                                                                .withTimeout(.3),
                                                 new RunCommand(() -> elevatorSubsystem.setMotorSpeed(.035),
                                                                 elevatorSubsystem).withTimeout(.3),
                                                 new RunCommand(() -> elevatorSubsystem.setMotorSpeed(0),
@@ -417,6 +418,23 @@ public class RobotContainer {
                                                 new PIDElevator(ElevatorPosition.A1, elevatorSubsystem),
                                                 new RunCommand(() -> wristSubsystem
                                                                 .setCurrentPosition(WristPosition.ALGAEPICKUP),
+                                                                wristSubsystem).withTimeout(.1),
+                                                new IntakeAlgae(shooter),
+                                                new RunCommand(() -> shooter.setShooterSpeed(.2), shooter)
+                                                                .withTimeout(.3),
+
+                                                new RunCommand(() -> wristSubsystem
+                                                                .setCurrentPosition(WristPosition.HOME),
+                                                                wristSubsystem).withTimeout(0.1)));
+                // Bind floor pickup to R2
+                new JoystickButton(operatorJoystick, 8).onTrue(
+                                new SequentialCommandGroup(
+                                                new RunCommand(() -> wristSubsystem
+                                                                .setCurrentPosition(WristPosition.HOME),
+                                                                wristSubsystem).withTimeout(0.3),
+                                                new PIDElevator(ElevatorPosition.Home, elevatorSubsystem),
+                                                new RunCommand(() -> wristSubsystem
+                                                                .setCurrentPosition(WristPosition.FLOORPICKUP),
                                                                 wristSubsystem).withTimeout(.1),
                                                 new IntakeAlgae(shooter),
                                                 new RunCommand(() -> shooter.setShooterSpeed(.2), shooter)
