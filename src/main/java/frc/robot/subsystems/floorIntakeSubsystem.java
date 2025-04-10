@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+//import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,21 +25,18 @@ public class floorIntakeSubsystem extends SubsystemBase {
         floorIntakeMotor.set(speed);
     }
 
-    pu  void extendFloorIntake() {
-       fix value of max extension
-        while (floorIntakeMotor.getValue < 30) {
-        setFloorIntakeSpeed(0.5);
-        } else {
-            setFloorIntakeSpeed(0.0);
+    public void extendFloorIntake() {
+        // fix value of max extension
+        while (2 < 30) {
+            setFloorIntakeSpeed(0.5);
         }
     }
 
     public void retractFloorIntake() {
-        while (floorIntakeMotor.getValue > 0) {
+        while (floorIntakeMotor.get() > 0) {
             setFloorIntakeSpeed(-0.5);
-        } else {
-            setFloorIntakeSpeed(0.0);
         }
+        setFloorIntakeSpeed(0.0);
     }
 
     public void stopFloorIntake() {
