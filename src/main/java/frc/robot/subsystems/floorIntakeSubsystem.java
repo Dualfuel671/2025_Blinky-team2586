@@ -45,8 +45,8 @@ public class floorIntakeSubsystem extends SubsystemBase {
 
     public floorIntakeSubsystem() {
         // Initialize the falcones and get encored for later use.
-        moveMotor = new TalonFX(90);
-        intakeMotor = new TalonFX(91);
+        moveMotor = new TalonFX(15);
+        intakeMotor = new TalonFX(13);
         moveMotorConfig = new TalonFXConfiguration();
         intakeMotorConfig = new TalonFXConfiguration();
         fullyInLimitSwitch = new DigitalInput(4);
@@ -65,6 +65,11 @@ public class floorIntakeSubsystem extends SubsystemBase {
 
         // Initialize dashboard values
         SmartDashboard.setDefaultBoolean("Direction", true);
+    }
+
+    public void setIntakeSpeed(double speed) {
+        SmartDashboard.putNumber("Intake Speed", speed);
+        intakeMotor.set(speed);
     }
 
     public void setExtensionSpeed(double speed) {

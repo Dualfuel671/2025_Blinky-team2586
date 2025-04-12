@@ -13,6 +13,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.ctre.phoenix.ButtonMonitor;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -39,6 +40,7 @@ import frc.robot.commands.IntakeAlgae;
 import frc.robot.commands.OutakeAlgae;
 import frc.robot.commands.PIDElevator;
 import frc.robot.commands.PIDWrist;
+import frc.robot.commands.PIDfloorMovement;
 import frc.robot.commands.SetLeds;
 import frc.robot.subsystems.ElevatorSubsystem.ElevatorPosition;
 import frc.robot.subsystems.PhotonCam;
@@ -56,7 +58,9 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.RampSubSystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.WristSubSystem;
+import frc.robot.subsystems.floorIntakeSubsystem;
 import frc.robot.subsystems.WristSubSystem.WristPosition;
+import frc.robot.subsystems.floorIntakeSubsystem.FloorPickupPosition;
 
 public class RobotContainer {
 
@@ -85,6 +89,7 @@ public class RobotContainer {
 
         public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
         private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+        private final floorIntakeSubsystem floorIntakeSubsystem = new floorIntakeSubsystem();
         private final WristSubSystem wristSubsystem = new WristSubSystem();
         private final RampSubSystem rampSubsystem = new RampSubSystem();
         private final Shooter shooter = new Shooter();
@@ -482,7 +487,15 @@ public class RobotContainer {
                                                 // .setCurrentPosition(WristPosition.HOME),
                                                 // wristSubsystem).withTimeout(0.3),
                                                 new OutakeAlgae(shooter).withTimeout(.3)));
-
+                // bind options to floor out
+                new JoystickButton(operatorJoystick, 10).onTrue(
+                                new SequentialCommandGroup(
+                                                new PIDfloorMovement(FloorPickupPosition.out, floorIntakeSubsystem)));
+                // new RunCommand(() -> floorIntakeSubsystem.setIntakeSpeed(.2),
+                // floorIntakeSubsystem),
+                // new RunCommand(() -> wristSubsystem
+                // .setCurrentPosition(WristPosition.ALGAESHOOT),
+                // wristSubsystem).withTimeout(0.3)));
         }
 
         public Command getAutonomousCommand() {
