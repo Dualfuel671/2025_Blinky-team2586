@@ -4,24 +4,11 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.ElevatorSubsystem.ElevatorPosition;
 
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
-import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkLimitSwitch;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.LimitSwitchConfig.Type;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
@@ -63,8 +50,6 @@ public class floorIntakeSubsystem extends SubsystemBase {
         moveMotorConfig = new TalonFXConfiguration();
         intakeMotorConfig = new TalonFXConfiguration();
         fullyInLimitSwitch = new DigitalInput(4);
-        // TalonFXConfiguration config = new TalonFXConfiguration();
-        // config.primaryPID.selectedFeedbackSensor = FeedbackDevice.IntegratedSensor;
 
         PIDConstraints = new Constraints(300, 400);
         // PIDie = new ProfiledPIDController(.040, 0.03, 0, PIDConstraints);
@@ -74,7 +59,9 @@ public class floorIntakeSubsystem extends SubsystemBase {
         moveMotor.setNeutralMode(NeutralModeValue.Brake);
         intakeMotor.setNeutralMode(NeutralModeValue.Brake);
 
-        // intakeMotor.setSelectedSensorPosition(0);
+        // Apply configurations to the motors
+        moveMotor.getConfigurator().apply(moveMotorConfig);
+        intakeMotor.getConfigurator().apply(intakeMotorConfig);
 
         // Initialize dashboard values
         SmartDashboard.setDefaultBoolean("Direction", true);

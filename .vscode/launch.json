@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Main",
+      "request": "launch",
+      "mainClass": "frc.robot.Main",
+      "projectName": "Drive"
+    },
+    {
+      "type": "java",
       "name": "DeleteMe",
       "request": "launch",
       "mainClass": "frc.robot.subsystems.DeleteMe",
