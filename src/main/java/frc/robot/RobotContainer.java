@@ -479,6 +479,9 @@ public class RobotContainer {
                                                                                 new PIDfloorMovement(
                                                                                                 FloorPickupPosition.out,
                                                                                                 floorIntakeSubsystem)))));
+                new JoystickButton(operatorJoystick, 10).onTrue(
+                                new RunCommand(() -> floorIntakeSubsystem.setIntakeSpeed(-.4),
+                                                floorIntakeSubsystem).withTimeout(.1));
 
                 // Bind intake Algae A2 button to Up POV
                 new POVButton(operatorJoystick, 0).onTrue(
