@@ -9,30 +9,30 @@ import frc.robot.subsystems.floorIntakeSubsystem.FloorPickupPosition;
 
 public class PIDfloorMovement extends Command {
 
-    private floorIntakeSubsystem m_extensioFloorIntakeSubsystem;
+    private floorIntakeSubsystem m_extensionFloorIntakeSubsystem;
     private FloorPickupPosition targetPosition;
 
     public PIDfloorMovement(FloorPickupPosition targetPosition, floorIntakeSubsystem m_extensiFloorIntakeSubsystem) {
         this.targetPosition = targetPosition;
-        this.m_extensioFloorIntakeSubsystem = m_extensioFloorIntakeSubsystem;
+        this.m_extensionFloorIntakeSubsystem = m_extensiFloorIntakeSubsystem;
 
-        addRequirements(m_extensioFloorIntakeSubsystem);
+        addRequirements(m_extensionFloorIntakeSubsystem);
     }
 
     @Override
     public void initialize() {
-        m_extensioFloorIntakeSubsystem.resetPID();
+        m_extensionFloorIntakeSubsystem.resetPID();
     }
 
     @Override
     public void execute() {
-        m_extensioFloorIntakeSubsystem.placeholder(m_extensioFloorIntakeSubsystem.TranslateEnum(targetPosition));
+        m_extensionFloorIntakeSubsystem.placeholder(m_extensionFloorIntakeSubsystem.TranslateEnum(targetPosition));
     }
 
     @Override
     public boolean isFinished() {
-        if (Math.abs(m_extensioFloorIntakeSubsystem.getExtensionPosition()
-                - m_extensioFloorIntakeSubsystem.TranslateEnum(targetPosition)) < 0.5) {
+        if (Math.abs(m_extensionFloorIntakeSubsystem.TranslateEnum(targetPosition)
+                - m_extensionFloorIntakeSubsystem.getCurrentPosition()) < 0.1) {
             return true;
         }
         return false;
@@ -40,7 +40,8 @@ public class PIDfloorMovement extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_extensioFloorIntakeSubsystem.setCurrentPosition(FloorPickupPosition.out);
+        m_extensionFloorIntakeSubsystem.setCurrentPosition(FloorPickupPosition.out);
+        m_extensionFloorIntakeSubsystem.setMotorSpeed(0);
     }
 
 }

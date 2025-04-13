@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -308,7 +309,30 @@ public class RobotContainer {
                                                                                        // X
                                                                                        // (left)
                                                 ));
-
+                new JoystickButton(driverJoystick, 2).whileTrue(
+                                drivetrain
+                                                .applyRequest(() -> drive.withVelocityX(
+                                                                -1 * squareInput(driverJoystick.getLeftY()) * MaxSpeed) // Drive
+                                                                                                                        // forward
+                                                                                                                        // with
+                                                                                                                        // negative
+                                                                                                                        // Y
+                                                                                                                        // (forward)
+                                                                .withVelocityY(-1
+                                                                                * squareInput(driverJoystick.getLeftX())
+                                                                                * MaxSpeed) // Drive left
+                                                                                            // with negative
+                                                                                            // X (left)
+                                                                .withRotationalRate(-.7
+                                                                                * squareInput(driverJoystick
+                                                                                                .getRightX())
+                                                                                * MaxAngularRate) // Drive
+                                                                                                  // counterclockwise
+                                                                                                  // with
+                                                                                                  // negative
+                                                                                                  // X
+                                                                                                  // (left)
+                                                ));
                 drivetrain.registerTelemetry(logger::telemeterize);
 
                 /*
@@ -401,6 +425,10 @@ public class RobotContainer {
                                                 new RunCommand(() -> wristSubsystem
                                                                 .setCurrentPosition(WristPosition.HOME),
                                                                 wristSubsystem).withTimeout(0.3),
+                                                new RunCommand(() -> floorIntakeSubsystem.setIntakeSpeed(0),
+                                                                floorIntakeSubsystem)
+                                                                .withTimeout(0.1),
+                                                new PIDfloorMovement(FloorPickupPosition.in, floorIntakeSubsystem),
                                                 new PIDElevator(ElevatorPosition.Home, elevatorSubsystem),
                                                 new RunCommand(() -> elevatorSubsystem.setMotorSpeed(0.035),
                                                                 elevatorSubsystem).withTimeout(.3),
@@ -437,16 +465,21 @@ public class RobotContainer {
                                                                 .setCurrentPosition(WristPosition.HOME),
                                                                 wristSubsystem).withTimeout(0.3),
                                                 new PIDElevator(ElevatorPosition.Home, elevatorSubsystem),
-                                                new RunCommand(() -> wristSubsystem
-                                                                .setCurrentPosition(WristPosition.FLOORPICKUP),
-                                                                wristSubsystem).withTimeout(.1),
-                                                new IntakeAlgae(shooter),
-                                                new RunCommand(() -> shooter.setShooterSpeed(.2), shooter)
-                                                                .withTimeout(.3),
+                                                new ParallelCommandGroup(
+                                                                new RunCommand(() -> wristSubsystem
+                                                                                .setCurrentPosition(
+                                                                                                WristPosition.FLOORPICKUP),
+                                                                                wristSubsystem),
+                                                                new IntakeAlgae(shooter),
+                                                                new SequentialCommandGroup(
+                                                                                new RunCommand(() -> floorIntakeSubsystem
+                                                                                                .setIntakeSpeed(.3),
+                                                                                                floorIntakeSubsystem)
+                                                                                                .withTimeout(.1),
+                                                                                new PIDfloorMovement(
+                                                                                                FloorPickupPosition.out,
+                                                                                                floorIntakeSubsystem)))));
 
-                                                new RunCommand(() -> wristSubsystem
-                                                                .setCurrentPosition(WristPosition.HOME),
-                                                                wristSubsystem).withTimeout(0.1)));
                 // Bind intake Algae A2 button to Up POV
                 new POVButton(operatorJoystick, 0).onTrue(
                                 new SequentialCommandGroup(
@@ -487,10 +520,10 @@ public class RobotContainer {
                                                 // .setCurrentPosition(WristPosition.HOME),
                                                 // wristSubsystem).withTimeout(0.3),
                                                 new OutakeAlgae(shooter).withTimeout(.3)));
-                // bind options to floor out
-                new JoystickButton(operatorJoystick, 10).onTrue(
-                                new SequentialCommandGroup(
-                                                new PIDfloorMovement(FloorPickupPosition.out, floorIntakeSubsystem)));
+                // // bind options to floor out
+                // new JoystickButton(operatorJoystick, 10).onTrue(
+                // new SequentialCommandGroup(
+                // new PIDfloorMovement(FloorPickupPosition.out, floorIntakeSubsystem)));
                 // new RunCommand(() -> floorIntakeSubsystem.setIntakeSpeed(.2),
                 // floorIntakeSubsystem),
                 // new RunCommand(() -> wristSubsystem

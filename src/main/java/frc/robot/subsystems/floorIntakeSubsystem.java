@@ -21,7 +21,7 @@ public class floorIntakeSubsystem extends SubsystemBase {
     private TalonFX intakeMotor;
     private TalonFXConfiguration moveMotorConfig;
     private TalonFXConfiguration intakeMotorConfig;
-    private DigitalInput fullyInLimitSwitch;
+    // private DigitalInput fullyInLimitSwitch;
     private ProfiledPIDController PIDie;
     private Constraints PIDConstraints;
 
@@ -49,11 +49,11 @@ public class floorIntakeSubsystem extends SubsystemBase {
         intakeMotor = new TalonFX(13);
         moveMotorConfig = new TalonFXConfiguration();
         intakeMotorConfig = new TalonFXConfiguration();
-        fullyInLimitSwitch = new DigitalInput(4);
+        // fullyInLimitSwitch = new DigitalInput(4);
 
         PIDConstraints = new Constraints(300, 400);
         // PIDie = new ProfiledPIDController(.040, 0.03, 0, PIDConstraints);
-        PIDie = new ProfiledPIDController(.035, 0.03, 0, PIDConstraints);
+        PIDie = new ProfiledPIDController(.05, 0.05, 0, PIDConstraints);
 
         // Set the neutral mode to brake to stop immediately when reaching a limit
         moveMotor.setNeutralMode(NeutralModeValue.Brake);
@@ -85,11 +85,11 @@ public class floorIntakeSubsystem extends SubsystemBase {
 
     public double TranslateEnum(FloorPickupPosition FloorPickupPosition) {
         if (FloorPickupPosition == FloorPickupPosition.out) {
-            return 2;
+            return 5.7;
         } else if (FloorPickupPosition == FloorPickupPosition.in) {
             return 1;
         } else {
-            return 0;
+            return 3;
         }
 
     }
@@ -98,12 +98,16 @@ public class floorIntakeSubsystem extends SubsystemBase {
         PIDie.reset(getExtensionPosition());
     }
 
+    public void setMotorSpeed(double speed) {
+        moveMotor.set(speed);
+    }
+
     public void setCurrentPosition(FloorPickupPosition position) {
         currentPosition = position;
     }
 
-    public FloorPickupPosition getCurrentPosition() {
-        return currentPosition;
+    public double getCurrentPosition() {
+        return moveMotor.getPosition().getValueAsDouble();
     }
 
     public void setTargetPosition(FloorPickupPosition position) {
@@ -115,15 +119,15 @@ public class floorIntakeSubsystem extends SubsystemBase {
     }
 
     // tells us when the elevator is Home
-    public boolean extensionHome() {
-        return !fullyInLimitSwitch.get();
-    }
+    // public boolean extensionHome() {
+    // return !fullyInLimitSwitch.get();
+    // }
 
-    public void resetEncoders() {
-        if (extensionHome()) {
-            moveMotor.setPosition(0);
-        }
-    }
+    // public void resetEncoders() {
+    // if (extensionHome()) {
+    // moveMotor.setPosition(0);
+    // }
+    // }
 
     public void placeholder(double goal) {
 
@@ -134,9 +138,10 @@ public class floorIntakeSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("current position", getCurrentPosition().getValue());
+        SmartDashboard.putNumber("current position", getCurrentPosition());
         SmartDashboard.putNumber("target position", getTargetPosition().getValue());
-        SmartDashboard.putBoolean("is lower Limit switch triggered", extensionHome());
+        // SmartDashboard.putBoolean("is lower Limit switch triggered",
+        // extensionHome());
     }
 }
 
