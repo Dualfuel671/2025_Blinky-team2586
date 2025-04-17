@@ -14,7 +14,7 @@ public class IntakeAlgae extends Command {
 
     @Override
     public void initialize() {
-        m_shooter.setShooterSpeed(.4);
+        m_shooter.setShooterSpeed(.6);
     }
 
     @Override
@@ -29,8 +29,7 @@ public class IntakeAlgae extends Command {
     @Override
     public void end(boolean interrupted) {
         m_shooter.setShooterSpeed(0);
-        
-    }
 
+    }
 
 }

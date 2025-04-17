@@ -87,7 +87,7 @@ public class floorIntakeSubsystem extends SubsystemBase {
         if (FloorPickupPosition == FloorPickupPosition.out) {
             return 5.7;
         } else if (FloorPickupPosition == FloorPickupPosition.in) {
-            return 1;
+            return .5;
         } else {
             return 3;
         }

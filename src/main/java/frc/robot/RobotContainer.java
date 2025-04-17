@@ -420,22 +420,28 @@ public class RobotContainer {
 
                 // Bind Operator touchpad button to Home
                 new JoystickButton(operatorJoystick, 14).onTrue(
-                                new SequentialCommandGroup(
-                                                new StopShooterWheel(shooter),
-                                                new RunCommand(() -> wristSubsystem
-                                                                .setCurrentPosition(WristPosition.HOME),
-                                                                wristSubsystem).withTimeout(0.3),
-                                                new RunCommand(() -> floorIntakeSubsystem.setIntakeSpeed(0),
-                                                                floorIntakeSubsystem)
-                                                                .withTimeout(0.1),
-                                                new PIDfloorMovement(FloorPickupPosition.in, floorIntakeSubsystem),
-                                                new PIDElevator(ElevatorPosition.Home, elevatorSubsystem),
-                                                new RunCommand(() -> elevatorSubsystem.setMotorSpeed(0.035),
-                                                                elevatorSubsystem).withTimeout(.3),
-                                                new RunCommand(() -> elevatorSubsystem.setMotorSpeed(0),
-                                                                elevatorSubsystem).withTimeout(0.1),
-                                                new RunCommand(() -> elevatorSubsystem.resetEncoders(),
-                                                                elevatorSubsystem).withTimeout(.5)));
+                                new ParallelCommandGroup(
+                                                new SequentialCommandGroup(
+                                                                new StopShooterWheel(shooter),
+                                                                new RunCommand(() -> wristSubsystem
+                                                                                .setCurrentPosition(WristPosition.HOME),
+                                                                                wristSubsystem).withTimeout(0.3),
+                                                                new PIDElevator(ElevatorPosition.Home,
+                                                                                elevatorSubsystem),
+                                                                new RunCommand(() -> elevatorSubsystem
+                                                                                .setMotorSpeed(0.035),
+                                                                                elevatorSubsystem).withTimeout(.3),
+                                                                new RunCommand(() -> elevatorSubsystem.setMotorSpeed(0),
+                                                                                elevatorSubsystem).withTimeout(0.1),
+                                                                new RunCommand(() -> elevatorSubsystem.resetEncoders(),
+                                                                                elevatorSubsystem).withTimeout(.5)),
+                                                new SequentialCommandGroup(
+                                                                new RunCommand(() -> floorIntakeSubsystem
+                                                                                .setIntakeSpeed(0),
+                                                                                floorIntakeSubsystem)
+                                                                                .withTimeout(0.1),
+                                                                new PIDfloorMovement(FloorPickupPosition.in,
+                                                                                floorIntakeSubsystem))));
 
                 // Bind Operator left trigger to shoot coral
                 new JoystickButton(operatorJoystick, 7).onTrue(
