@@ -41,21 +41,6 @@ public class WristSubSystem extends SubsystemBase {
     }
   }
 
-  public WristPosition currentPosition = WristPosition.HOME;
-  public WristPosition targetPosition = WristPosition.HOME;
-
-  public WristSubSystem() {
-
-    wristPIDConstraints = new Constraints(300, 400);
-    wristPID = new ProfiledPIDController(4, 0, 0, wristPIDConstraints);
-
-  }
-
-  // What in the heck is a StatusSignal!?
-  public double getWristEncoderPosition() {
-    return wristCaNcoder.getPosition().getValueAsDouble();
-  }
-
   public double TranslateEnum(WristPosition wristPosition) {
     if (wristPosition == WristPosition.CORALL4) {
       return -0.146 - 0.018;
@@ -72,6 +57,21 @@ public class WristSubSystem extends SubsystemBase {
     else {
       return -0.146; // home
     }
+  }
+
+  public WristPosition currentPosition = WristPosition.HOME;
+  public WristPosition targetPosition = WristPosition.HOME;
+
+  public WristSubSystem() {
+
+    wristPIDConstraints = new Constraints(300, 400);
+    wristPID = new ProfiledPIDController(4, 0, 0, wristPIDConstraints);
+
+  }
+
+  // What in the heck is a StatusSignal!?
+  public double getWristEncoderPosition() {
+    return wristCaNcoder.getPosition().getValueAsDouble();
   }
 
   public void resetPID() {

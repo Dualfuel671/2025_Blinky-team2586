@@ -40,6 +40,17 @@ public class floorIntakeSubsystem extends SubsystemBase {
         }
     }
 
+    public double TranslateEnum(FloorPickupPosition FloorPickupPosition) {
+        if (FloorPickupPosition == FloorPickupPosition.out) {
+            return 5.7;
+        } else if (FloorPickupPosition == FloorPickupPosition.in) {
+            return .5;
+        } else {
+            return 3;
+        }
+
+    }
+
     public FloorPickupPosition currentPosition = FloorPickupPosition.in;
     public FloorPickupPosition targetPosition = FloorPickupPosition.out;
 
@@ -81,17 +92,6 @@ public class floorIntakeSubsystem extends SubsystemBase {
     // class
     public double getExtensionPosition() {
         return moveMotor.getPosition().getValueAsDouble();
-    }
-
-    public double TranslateEnum(FloorPickupPosition FloorPickupPosition) {
-        if (FloorPickupPosition == FloorPickupPosition.out) {
-            return 5.7;
-        } else if (FloorPickupPosition == FloorPickupPosition.in) {
-            return .5;
-        } else {
-            return 3;
-        }
-
     }
 
     public void resetPID() {

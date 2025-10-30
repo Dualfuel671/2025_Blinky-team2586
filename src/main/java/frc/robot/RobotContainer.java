@@ -475,7 +475,7 @@ public class RobotContainer {
                                                                 new RunCommand(() -> wristSubsystem
                                                                                 .setCurrentPosition(
                                                                                                 WristPosition.FLOORPICKUP),
-                                                                                wristSubsystem),
+                                                                                wristSubsystem).withTimeout(.3),
                                                                 new IntakeAlgae(shooter),
                                                                 new SequentialCommandGroup(
                                                                                 new RunCommand(() -> floorIntakeSubsystem
