@@ -4,38 +4,18 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-    {
-      "type": "java",
-      "name": "Main",
-      "request": "launch",
-      "mainClass": "frc.robot.Main",
-      "projectName": "new-sterling-code"
-    },
-    {
-      "type": "java",
-      "name": "Main",
-      "request": "launch",
-      "mainClass": "frc.robot.Main",
-      "projectName": "Drive"
-    },
-    {
-      "type": "java",
-      "name": "DeleteMe",
-      "request": "launch",
-      "mainClass": "frc.robot.subsystems.DeleteMe",
-      "projectName": "2025DriveCode"
-    },
+
     {
       "type": "wpilib",
       "name": "WPILib Desktop Debug",
       "request": "launch",
-      "desktop": true
+      "desktop": true,
     },
     {
       "type": "wpilib",
       "name": "WPILib roboRIO Debug",
       "request": "launch",
-      "desktop": false
+      "desktop": false,
     }
   ]
 }
